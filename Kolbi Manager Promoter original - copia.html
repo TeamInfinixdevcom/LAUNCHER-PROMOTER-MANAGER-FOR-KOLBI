@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+    <html lang='es'>
+
+    <head>
+        <meta charset='UTF-8'>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Kolbi Calle 3 San José Centro / Power Manager Promoter</title>
+        <style>
+            :root {
+                --main-bg: linear-gradient(135deg, #0f2027 0%, #232a34 40%, #0ff 100%);
+                --main-color: #00fff7;
+                --accent-color: #0ff;
+            }
+
+            body {
+                font-family: 'Segoe UI', 'Orbitron', 'Montserrat', sans-serif;
+                background: var(--main-bg);
+                color: #fff;
+                text-align: center;
+                padding: 20px;
+                min-height: 100vh;
+                transition: background 0.5s;
+            }
+
+            select,
+            input,
+            button {
+                padding: 12px;
+                margin: 12px;
+                border-radius: 8px;
+                border: 2px solid var(--main-color);
+                font-size: 18px;
+                background: rgba(20, 30, 40, 0.8);
+                color: var(--main-color);
+                box-shadow: 0 0 12px var(--main-color), 0 0 2px var(--accent-color) inset;
+                transition: box-shadow 0.2s, border-color 0.2s, color 0.5s, border-color 0.5s;
+            }
+
+            select:focus,
+            input:focus {
+                outline: none;
+                border-color: var(--accent-color);
+                box-shadow: 0 0 20px var(--main-color), 0 0 4px var(--accent-color) inset;
+            }
+            
+            #carteraCodeType {
+                margin-bottom: 8px;
+            }
+
+            button {
+                background: linear-gradient(90deg, var(--main-color) 0%, var(--accent-color) 100%);
+                color: #232a34;
+                font-weight: bold;
+                box-shadow: 0 0 16px var(--main-color), 0 0 4px var(--accent-color) inset;
+                border: none;
+                text-shadow: 0 0 6px #fff;
+            }
+
+            button:hover {
+                background: linear-gradient(90deg, var(--accent-color) 0%, var(--main-color) 100%);
+                color: #fff;
+                box-shadow: 0 0 32px var(--main-color), 0 0 8px var(--accent-color) inset;
+            }
+
+            #sentList {
+                margin-top: 30px;
+                background: rgba(44, 83, 100, 0.25);
+                padding: 18px;
+                border-radius: 16px;
+                box-shadow: 0 0 24px var(--main-color), 0 0 8px var(--accent-color) inset;
+                border: 2px solid var(--main-color);
+            }
+
+            #sentList h3 {
+                color: var(--main-color);
+                text-shadow: 0 0 8px var(--main-color);
+            }
+
+            #numberList li {
+                color: #fff;
+                background: rgba(0, 255, 247, 0.08);
+                border-left: 4px solid var(--main-color);
+                margin: 6px 0;
+                padding: 6px 12px;
+                border-radius: 6px;
+                box-shadow: 0 0 8px var(--main-color);
+            }
+
+            #currentMsg {
+                margin: 18px 0;
+                font-weight: bold;
+                background: rgba(0, 255, 247, 0.10);
+                padding: 14px;
+                border-radius: 10px;
+                color: var(--main-color);
+                white-space: pre-line;
+                box-shadow: 0 0 16px var(--main-color), 0 0 4px var(--accent-color) inset;
+                border: 2px solid var(--main-color);
+            }
+
+            label {
+                display: block;
+                margin-top: 18px;
+                font-weight: bold;
+                text-align: left;
+                margin-left: 25%;
+                margin-right: 25%;
+                color: var(--main-color);
+                text-shadow: 0 0 6px var(--main-color);
+            }
+
+            h1 {
+                text-shadow: 0 0 24px var(--main-color), 0 0 8px var(--accent-color);
+                font-size: 2.3em;
+                letter-spacing: 2px;
+                color: var(--main-color);
+            }
+
+            footer {
+                margin-top: 40px;
+                font-size: 13px;
+                color: var(--main-color);
+                text-shadow: 0 0 6px var(--main-color);
+            }
+
+            .credit-stranger {
+                background: linear-gradient(270deg, #ff1744, #ff5252, #d50000, #ff1744);
+                background-size: 600% 600%;
+                -webkit-background-clip: text;
+                background-clip: text;
+                -webkit-text-fill-color: transparent;
+                text-fill-color: transparent;
+                animation: redGradientMove 5s ease-in-out infinite, redNeonGlow 1.2s alternate infinite;
+                font-weight: bold;
+                text-shadow: 0 0 16px #ff1744, 0 0 32px #d50000;
+            }
+
+            @keyframes redGradientMove {
+                0% {
+                    background-position: 0% 50%
+                }
+
+                50% {
+                    background-position: 100% 50%
+                }
+
+                100% {
+                    background-position: 0% 50%
+                }
+            }
+
+            @keyframes redNeonGlow {
+                0% {
+                    text-shadow: 0 0 16px #ff1744, 0 0 32px #d50000;
+                }
+
+                100% {
+                    text-shadow: 0 0 32px #ff5252, 0 0 48px #ff1744;
+                }
+            }
+
+            @media print {
+                body * {
+                    visibility: hidden;
+                }
+                #printReport,
+                #printReport * {
+                    visibility: visible;
+                }
+                #printReport {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 100vw;
+                    padding: 40px 20px;
+                    background: #fff !important;
+                    color: #222 !important;
+                    font-family: 'Segoe UI', 'Montserrat', sans-serif;
+                    border-radius: 24px;
+                    box-shadow: none;
+                }
+                #printReport h2 {
+                    color: #222 !important;
+                    text-align: center;
+                    margin-bottom: 20px;
+                    font-size: 2em;
+                    text-shadow: none;
+                }
+                #printReport .print-meta {
+                    text-align: center;
+                    font-size: 1.1em;
+                    margin-bottom: 18px;
+                    color: #444 !important;
+                    text-shadow: none;
+                }
+                #printReport ul {
+                    list-style: none;
+                    padding: 0;
+                    margin-bottom: 24px;
+                }
+                #printReport li {
+                    padding: 8px 0;
+                    border-bottom: 1px solid #222;
+                    font-size: 18px;
+                    color: #222 !important;
+                    background: none;
+                    border-left: none;
+                    margin: 6px 0;
+                    padding-left: 12px;
+                    border-radius: 0;
+                    box-shadow: none;
+                }
+            }
+
+            .form-row {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-bottom: 18px;
+            }
+            .agent-row {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 24px;
+                margin-bottom: 18px;
+            }
+            .agent-label {
+                min-width: 180px;
+                text-align: left;
+                font-weight: bold;
+                color: var(--main-color);
+            }
+            .agent-info {
+                min-width: 260px;
+                color: #fff;
+                font-weight: bold;
+                background: rgba(0,255,247,0.10);
+                border-radius: 10px;
+                padding: 12px 18px;
+                box-shadow: 0 0 16px var(--main-color);
+                border: 2px solid var(--main-color);
+                opacity: 0;
+                transform: translateY(20px);
+                transition: opacity 0.5s, transform 0.5s;
+            }
+            .agent-info.show {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .neon-clock {
+                font-family: 'Orbitron', 'Segoe UI', monospace;
+                font-size: 2em;
+                color: #00fff7;
+                text-shadow: 0 0 16px #00fff7, 0 0 32px #0ff;
+                letter-spacing: 2px;
+                margin-bottom: 18px;
+                background: rgba(20,30,40,0.7);
+                border-radius: 12px;
+                display: inline-block;
+                padding: 10px 32px;
+                border: 2px solid #00fff7;
+                box-shadow: 0 0 24px #00fff7, 0 0 8px #0ff inset;
+                animation: neonPulse 1.5s infinite alternate;
+            }
+            @keyframes neonPulse {
+                0% { box-shadow: 0 0 24px #00fff7, 0 0 8px #0ff inset; }
+                100% { box-shadow: 0 0 48px #00fff7, 0 0 16px #0ff inset; }
+            }
+
+            /* Nuevos estilos para el widget de reloj mini y fuego */
+            .top-widgets {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 24px;
+                padding: 0 10%;
+            }
+            .mini-clock {
+                font-family: 'Orbitron', 'Segoe UI', monospace;
+                font-size: 1.2em;
+                color: #00fff7;
+                text-shadow: 0 0 12px #00fff7, 0 0 24px #0ff;
+                letter-spacing: 1px;
+                background: rgba(20,30,40,0.7);
+                border-radius: 8px;
+                padding: 8px 16px;
+                border: 2px solid #00fff7;
+                box-shadow: 0 0 16px #00fff7, 0 0 4px #0ff inset;
+            }
+            .fire-widget {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 8px 16px;
+                border-radius: 8px;
+                background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(10px);
+                border: 2px solid transparent;
+                position: relative;
+                overflow: hidden;
+            }
+            .fire-icons {
+                font-size: 1.5em;
+                margin-right: 8px;
+                animation: firePulse 1.5s infinite alternate;
+            }
+            .fire-info {
+                text-align: left;
+                color: #fff;
+            }
+            .fire-status {
+                font-weight: bold;
+                margin-top: 4px;
+            }
+            @keyframes firePulse {
+                0% { transform: scale(1); }
+                100% { transform: scale(1.1); }
+            }
+
+            /* Fin de estilos para widgets */
+
+            /* Widgets: mini clock + fire/goat */
+            .top-widgets{
+                display:flex;
+                gap:18px;
+                align-items:center;
+                justify-content:center;
+                margin-bottom:14px;
+            }
+            .mini-clock{
+                font-family: 'Orbitron', monospace;
+                padding:8px 14px;
+                border-radius:10px;
+                background:rgba(0,0,0,0.45);
+                border:2px solid rgba(255,255,255,0.06);
+                color:var(--main-color);
+                box-shadow:0 0 12px rgba(0,255,247,0.06);
+                min-width:180px;
+                text-align:center;
+            }
+            .fire-widget{
+                display:flex;
+                align-items:center;
+                gap:12px;
+                padding:8px 14px;
+                border-radius:12px;
+                background:linear-gradient(90deg, rgba(0,0,0,0.35), rgba(0,0,0,0.25));
+                border:2px solid rgba(255,255,255,0.06);
+                color:var(--main-color);
+                min-width:260px;
+                justify-content:center;
+            }
+            .fire-icons{
+                font-size:20px;
+                line-height:1;
+                display:flex;
+                gap:4px;
+                transform-origin:center;
+            }
+            @keyframes flameFlicker {
+                0% { transform: translateY(0) scale(1); opacity:1; }
+                50% { transform: translateY(-6px) scale(1.08); opacity:0.85; }
+                100% { transform: translateY(0) scale(1); opacity:1; }
+            }
+            .fire-icons span{
+                display:inline-block;
+                animation: flameFlicker 900ms ease-in-out infinite;
+            }
+            .fire-info { text-align:left; font-weight:700; font-size:0.95em; }
+            .fire-status { font-weight:900; margin-top:4px; font-size:0.9em; opacity:0.9; }
+            /* Levels */
+            .level-safe { --fw-color: #bdbdbd; border-color: rgba(125,125,125,0.08); color:var(--fw-color); }
+            .level-warm { --fw-color: #ffb74d; color:var(--fw-color); border-color: rgba(255,183,77,0.12); box-shadow:0 0 18px rgba(255,183,77,0.08); }
+            .level-fire { --fw-color: #ff5252; color:var(--fw-color); border-color: rgba(255,82,82,0.18); box-shadow:0 0 28px rgba(255,82,82,0.12); }
+            .level-inferno { --fw-color: #ff1744; color:var(--fw-color); border-color: rgba(255,23,68,0.22); box-shadow:0 0 40px rgba(255,23,68,0.18); }
+            .level-goat { --fw-color: #9c27b0; color:var(--fw-color); border-color: rgba(156,39,176,0.22); box-shadow:0 0 42px rgba(156,39,176,0.18); }
+            /* Staggered flicker (more intensity) */
+            .level-warm .fire-icons span { animation-duration:800ms; }
+            .level-fire .fire-icons span { animation-duration:700ms; }
+            .level-inferno .fire-icons span { animation-duration:600ms; filter:drop-shadow(0 0 6px rgba(255,23,68,0.8)); }
+            .level-goat .fire-icons span { animation-duration:520ms; transform:rotate(-6deg); filter:drop-shadow(0 0 10px rgba(156,39,176,0.9)); }
+            /* small responsive */
+            @media(max-width:700px){ .top-widgets{flex-direction:column; gap:8px;} .fire-widget{min-width:200px;} }
+            /* Weather and location widget styles */
+            .weather-widget{ display:flex; align-items:center; gap:8px; padding:6px 10px; border-radius:10px; background:rgba(0,0,0,0.35); border:2px solid rgba(255,255,255,0.04); color:var(--main-color); }
+            #weatherIcon{ font-size:20px; }
+            .weather-info{ text-align:left; font-weight:700; }
+            .weather-info #weatherTemp{ font-size:1.05em; }
+            .loc-widget{ display:flex; align-items:center; gap:8px; padding:6px 10px; border-radius:10px; background:rgba(0,0,0,0.18); border:2px solid rgba(255,255,255,0.04); color:var(--main-color); }
+            #refreshWeather{ background:transparent;border:1px solid rgba(255,255,255,0.06); color:var(--main-color); padding:6px;border-radius:8px; cursor:pointer; }
+            #locLink{ color:inherit; text-decoration:none; margin-left:8px; }
+
+            /* Styles for back to work and aguinaldo widget */
+            .back-work{ display:inline-block; padding:8px 12px; border-radius:10px; background:linear-gradient(90deg,#00fff7,#0ff); color:#132; font-weight:800; text-decoration:none; box-shadow:0 0 16px rgba(0,255,247,0.08); }
+            .back-work:hover{ transform:translateY(-2px); }
+            .aguinaldo-widget{ display:flex; align-items:center; gap:10px; padding:8px 12px; border-radius:10px; background:linear-gradient(90deg, rgba(255,235,59,0.06), rgba(255,193,7,0.04)); border:2px solid rgba(255,235,59,0.06); color:var(--main-color); }
+            .aguinaldo-info{ font-weight:800; text-align:left; }
+        </style>
+    </head>
+
+    <body>
+        <h1>Kolbi Calle 3 San José Centro / Power Manager Promoter</h1>
+        <!-- WIDGETS: volver al trabajo (rana) + weather + fire/goat + aguinaldo countdown -->
+        <div class="top-widgets">
+            <a id="backToWork" class="back-work" href="https://prod.ice.go.cr/komercialice/login/" target="_blank" rel="noopener">🐸 Volver al trabajo</a>
+            <div id="weatherWidget" class="weather-widget">
+                <div id="weatherIcon">⛅</div>
+                <div class="weather-info">
+                    <div id="weatherTemp">--°C</div>
+                    <div id="weatherDesc">Clima: --</div>
+                </div>
+                <button id="refreshWeather" title="Actualizar clima" onclick="updateWeatherAndLocation()">🔄</button>
+            </div>
+            <div id="fireWidget" class="fire-widget level-safe" aria-live="polite">
+                <div id="fireIcons" class="fire-icons">🔥</div>
+                <div class="fire-info">
+                    <div>Total envíos: <span id="totalSends">0</span></div>
+                    <div id="fireStatus" class="fire-status">Calm</div>
+                </div>
+            </div>
+            <div id="aguinaldoWidget" class="aguinaldo-widget">
+                <div id="aguinaldoEmoji">🎉</div>
+                <div class="aguinaldo-info">
+                    <div>Días para aguinaldo:</div>
+                    <div id="daysToAguinaldo">-- días</div>
+                </div>
+            </div>
+        </div>
+        <div id="neonClock" class="neon-clock"></div>
+        <div class="form-row agent-row">
+            <label for="agent" class="agent-label">Nombre del agente:</label>
+            <select id='agent' onchange="showAgentInfo()">
+                <option value='' data-user='' data-email='' style='color:#888;'>Seleccioná tu nombre</option>
+                <option value='Flora Romero Hernandez' data-user='fromero' data-email='fromero@ice.go.cr' style='color:#e91e63;'>Flora Romero Hernandez</option>
+                <option value='Jason Daniel Lopez Guzman' data-user='jlopezgu' data-email='jlopezgu@ice.go.cr' style='color:#3f51b5;'>Jason Daniel Lopez Guzman</option>
+                <option value='Gustavo Enrique Lanzonis Campos' data-user='glanzoni' data-email='glanzonis@ice.go.cr' style='color:#009688;'>Gustavo Enrique Lanzonis Campos</option>
+                <option value='Claudia Andrea Contreras Palomo' data-user='ccontreras' data-email='ccontreras@ice.go.cr' style='color:#ff9800;'>Claudia Andrea Contreras Palomo</option>
+                <option value='Angie Mariela Cardona Rodriguez' data-user='acardona' data-email='acardona@ice.go.cr' style='color:#8bc34a;'>Angie Mariela Cardona Rodriguez</option>
+                <option value='Gloriana Brenes Duran' data-user='gbrenes' data-email='gbrenes@ice.go.cr' style='color:#00bcd4;'>Gloriana Brenes Duran</option>
+                <option value='Paola Barboza Palma' data-user='pbarboza' data-email='pbarboza@ice.go.cr' style='color:#f44336;'>Paola Barboza Palma</option>
+                <option value='Cristian Rivera Salazar' data-user='crivera' data-email='criveras@ice.go.cr' style='color:#9c27b0;'>Cristian Rivera Salazar</option>
+                <option value='Enyeril Medina Jarquin' data-user='emedina' data-email='emedina@ice.go.cr' style='color:#2196f3;'>Enyeril Medina Jarquin</option>
+                <option value='Raisha Manzanares Maradiaga' data-user='rmanzanares' data-email='rmanzanares@ice.go.cr' style='color:#4caf50;'>Raisha Manzanares Maradiaga</option>
+                <option value='Maria Jose Sanabria Lopez' data-user='msanabria' data-email='msanabria@ice.go.cr' style='color:#ffeb3b;'>Maria Jose Sanabria Lopez</option>
+                <option value='Ruben Madrigal Jimenez' data-user='rmadrigal' data-email='rmadrigalj@ice.go.cr' style='color:#795548;'>Ruben Madrigal Jimenez</option>
+                <option value='Stephanie Fallas Arias' data-user='sfallas' data-email='sfallas@ice.go.cr' style='color:#607d8b;'>Stephanie Fallas Arias</option>
+            </select>
+            <div id="agentInfo" class="agent-info"></div>
+        </div>
+        <div class="form-row">
+            <label for="offerType">Tipo de oferta:</label>
+            <select id='offerType' onchange='updateMessage()'>
+                <option value='Plan móvil'>📱 Plan móvil</option>
+                <option value='Internet hogar'>🏠 Internet hogar</option>
+                <option value='Oferta Racsa 5G'>📡 Oferta Racsa 5G</option>
+                <option value='Mensaje Personalizado'>✉️ Mensaje Personalizado</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <label for="phoneNumber">Número sin 506:</label>
+            <input type='text' id='phoneNumber' placeholder='Número sin 506' maxlength="8" pattern="\d{8}">
+        </div>
+        <div class="form-row">
+            <label for="carteraCodeType">Código de Cartera de Clientes:</label>
+            <select id="carteraCodeType" onchange="toggleCarteraInput()" style="margin-bottom:8px;">
+                <option value="codigo">Ingresá el código de cartera</option>
+                <option value="asignacion">Por Asignación de Jefatura sin código</option>
+            </select>
+            <input type="text" id="carteraCode" placeholder="Solo números" maxlength="20" pattern="\d*" style="margin-bottom:16px;">
+        </div>
+        <!-- Campo para número fijo, se muestra solo cuando se selecciona 'Oferta Fija' -->
+        <div class="form-row" id="fixedNumberRow" style="display:none;">
+            <label for="fixedNumber">Introduce el número fijo:</label>
+            <input type="text" id="fixedNumber" placeholder="Número fijo" maxlength="8" pattern="\d{8}">
+        </div>
+        <!-- Campo para mensaje personalizado, se muestra solo cuando se selecciona 'Mensaje Personalizado' -->
+        <div class="form-row" id="customMessageRow" style="display:none;">
+            <label for="customMessage">Escribe el mensaje personalizado para el cliente:</label>
+            <textarea id="customMessage" placeholder="Escribe aquí el mensaje que quieres enviar al cliente" rows="6" style="width:60%;padding:12px;border-radius:8px;resize:vertical;background:rgba(20,30,40,0.8);color:var(--main-color);border:2px solid var(--main-color);"></textarea>
+        </div>
+        <div id="currentMsg"></div>
+        <button onclick='sendMessage()'>Abrir WhatsApp Web</button>
+        <div id="printReport" style="display:none">
+            <h2>Reporte de Contactos - Kolbi Calle 3</h2>
+            <div class="print-meta" id="printDate"></div>
+            <div class="print-meta">Se entrega a Jefatura Andres Flores Herrera</div>
+            <div id="carteraPrint" style="font-size:18px;color:#00c3ff;margin-bottom:16px;"></div>
+            <ul id="printList"></ul>
+        </div>
+        <div id='sentList'>
+            <h3>Historial de envíos:</h3>
+            <ul id='numberList'></ul>
+            <button onclick='printContactList()'>🖨️ Imprimir lista</button>
+            <button onclick='clearHistory()' style='margin-left:10px;'>🧹 Terminar envíos y borrar historial</button>
+        </div>
+        <div id="toast" style="display:none;position:fixed;bottom:40px;left:50%;transform:translateX(-50%);background:var(--main-color);color:#232a34;padding:16px 32px;border-radius:8px;box-shadow:0 0 24px var(--main-color);font-weight:bold;z-index:999;text-shadow:0 0 6px #fff;">Envío registrado exitosamente</div>
+        <footer>
+            <span style="opacity:0.7;">
+                <a href="mailto:rmadrigalj@ice.go.cr" class="credit-stranger" target="_blank">
+                    Full Stack Developer Ruben Madrigal
+                </a>
+                &nbsp;|&nbsp; Kolbi Calle 3 - Versión 1
+            </span>
+        </footer>
+        <script>
+            const messages = {
+                'Plan móvil': `📱✨ ¡Renová tu plan y estrená celular nuevo con kölbi! 🚀🐸
+    ¿Pensando en actualizar tu celular? 📲 ¡Esta es tu oportunidad!
+    Vení a la Tienda kölbi en San José Centro y descubrí nuestros planes móviles con celulares a precios especiales. 💚
+    🕒 Horario de atención:
+    Lunes a viernes: 11:00 a.m. – 6:45 p.m.
+    📍 Ubicación:
+    Calle 3, entre avenidas 2 y 4, San José Centro.
+    📌 Cómo llegar:
+    https://maps.app.goo.gl/eDh6VNa6ZtDqL8dDA
+    💬 Escribinos por este medio y con gusto te ayudamos. 🐸🙌
+    ¡No dejés pasar esta oportunidad de estrenar celular y disfrutar de los mejores beneficios! 🚀💚
+    #RenováConKölbi #CelularesNuevos #PreciosEspeciales #KolbiEsTuyo`,
+                'Internet hogar': `🌐🚀 ¡Internet Hogar kölbi al mejor precio!
+
+    ¿Listo para navegar sin límites? 💻🎮📺
+
+    👉 Vení a la Tienda kölbi San José Centro, Calle 3 y descubrí nuestros planes de Internet Hogar fibra óptica:
+    ✅ Desde ₡24 500 al mes
+    ✅ 200 Mbps simétricos
+
+    Consultá precios y detalles en la tienda oficial: https://www.kolbi.cr/tienda/sc/ventas-hogar/internet/fibra-optica
+
+    Estabilidad, velocidad y cobertura nacional para que el teletrabajo, gaming y streaming sean sin pausas. 🐸✨
+
+    🕒 Horario de atención: Lunes a viernes, 11:00 a.m. – 6:45 p.m.
+    📍 Ubicación: Calle 3, entre avenidas 2 y 4, San José Centro.
+    📌 Cómo llegar: https://maps.app.goo.gl/eDh6VNa6ZtDqL8dDA
+
+    💬 Escribinos por aquí y te ayudamos en minutos 🙌
+
+    #InternetHogar #FibraÓptica #KolbiEsT #Promoción`,
+                'Oferta Racsa 5G': `📡✨ ¡Conectate con la nueva era del Internet con RACSA 5G! 🚀🌐
+    ¿Buscás velocidad, estabilidad y cobertura nacional? ¡Esta es tu oportunidad!
+
+    Disfrutá de nuestros planes de Internet Fijo 5G desde 50 Mbps hasta 300 Mbps, ideales para teletrabajo, gaming y streaming.
+    ✅ Instalación rápida y sin cables
+    ✅ Tecnología de última generación
+    ✅ Servicio Plug & Play
+
+    🕒 Horario de atención:
+    Lunes a viernes: 11:00 a.m. – 6:45 p.m.
+    Sábados: 8:00 a.m. – 1:30 p.m.
+
+    📍 Ubicación:
+    Calle 3, entre avenidas 2 y 4, San José Centro.
+
+    📌 Cómo llegar:
+    https://maps.app.goo.gl/eDh6VNa6ZtDqL8dDA
+
+    🗺️ Consulta acá el mapa de cobertura:
+    https://mapas.ice.go.cr/MapasInternetRacsa5G/
+
+    📧 Para más información:
+    Correo: afloresh@ice.go.cr
+    WhatsApp: 85009999
+
+    💬 Escribinos por este medio y con gusto te ayudamos.
+    ¡No dejés pasar esta oportunidad de conectarte con lo mejor de RACSA! 🚀💚
+    #RACSA5G #InternetFijo5G #ConectividadAvanzada #CostaRicaDigital`,
+                'Mensaje Personalizado': ``
+            };
+
+            function updateMessage() {
+                const offer = document.getElementById('offerType').value;
+            // Si la opción es Mensaje Personalizado, no sobreescribimos currentMessage aquí
+            if (offer === 'Mensaje Personalizado') {
+                document.getElementById('currentMsg').textContent = '';
+            } else {
+                currentMessage = messages[offer];
+                document.getElementById('currentMsg').textContent = currentMessage;
+            }
+                // Cambia colores según la oferta
+                if (offer === 'Oferta Racsa 5G') {
+                    document.documentElement.style.setProperty('--main-bg', 'linear-gradient(135deg, #0f2027 0%, #0a1a3c 40%, #00aaff 100%)');
+                    document.documentElement.style.setProperty('--main-color', '#00aaff');
+                    document.documentElement.style.setProperty('--accent-color', '#00eaff');
+                } else if (offer === 'Plan móvil') {
+                    document.documentElement.style.setProperty('--main-bg', 'linear-gradient(135deg, #0f2027 0%, #232a34 40%, #00fff7 100%)');
+                    document.documentElement.style.setProperty('--main-color', '#00fff7');
+                    document.documentElement.style.setProperty('--accent-color', '#0ff');
+                } else if (offer === 'Internet hogar') {
+                    document.documentElement.style.setProperty('--main-bg', 'linear-gradient(135deg, #181818 0%, #232a34 100%)');
+                    document.documentElement.style.setProperty('--main-color', '#fff');
+                    document.documentElement.style.setProperty('--accent-color', '#fff');
+                } else if (offer === 'Mensaje Personalizado') {
+                    // color rojo neón personalizado
+                    document.documentElement.style.setProperty('--main-bg', 'linear-gradient(135deg, #150101 0%, #3a0000 40%, #ff1744 100%)');
+                    document.documentElement.style.setProperty('--main-color', '#ff1744');
+                    document.documentElement.style.setProperty('--accent-color', '#ff5252');
+                }
+                // Mostrar u ocultar campo de número fijo según la oferta
+                toggleFixedInput();
+                // Mostrar u ocultar campo de mensaje personalizado
+                const customRow = document.getElementById('customMessageRow');
+                if (customRow) {
+                    if (offer === 'Mensaje Personalizado') customRow.style.display = 'flex'; else customRow.style.display = 'none';
+                }
+            }
+
+            let currentMessage = messages[document.getElementById('offerType').value];
+
+            function showToast(msg) {
+                const toast = document.getElementById('toast');
+                toast.textContent = msg;
+                toast.style.display = 'block';
+                setTimeout(() => { toast.style.display = 'none'; }, 2000);
+            }
+            function saveHistory() {
+                const numberList = document.getElementById('numberList');
+                const items = Array.from(numberList.children).map(li => li.dataset.info);
+                localStorage.setItem('kolbiHistory', JSON.stringify(items));
+            }
+            function loadHistory() {
+                const items = JSON.parse(localStorage.getItem('kolbiHistory') || '[]');
+                const numberList = document.getElementById('numberList');
+                numberList.innerHTML = '';
+                items.forEach(data => {
+                    const li = document.createElement('li');
+                    li.dataset.info = data;
+                    const info = JSON.parse(data);
+                    // Si existe número fijo registrado, mostrarlo en el historial
+                    const extra = (info.offer === 'Oferta Fija' && info.fixedNumber) ? ` | Número fijo: ${info.fixedNumber}` :
+                        (info.carteraType === 'asignacion' ? ' | Por Asignación de Jefatura' : ` | Código: ${info.carteraCode}`);
+                    li.textContent = `${info.name} | ${info.user} | ${info.email} | ${info.offer} | ${info.fullNumber}` + extra + ` | Enviado: ${info.fecha} ${info.hora}`;
+                    numberList.appendChild(li);
+                });
+                // Actualiza el total de envíos en el widget de fuego
+                document.getElementById('totalSends').textContent = items.length;
+            }
+            function clearHistory() {
+                document.getElementById('numberList').innerHTML = '';
+                localStorage.removeItem('kolbiHistory');
+                showToast('Historial borrado');
+            }
+            function toggleCarteraInput() {
+                const type = document.getElementById('carteraCodeType').value;
+                const input = document.getElementById('carteraCode');
+                if (type === 'asignacion') {
+                    input.style.display = 'none';
+                } else {
+                    input.style.display = '';
+                }
+            }
+            // Muestra u oculta el campo de número fijo según la oferta seleccionada
+            function toggleFixedInput() {
+                const offer = document.getElementById('offerType').value;
+                const fixedRow = document.getElementById('fixedNumberRow');
+                if (!fixedRow) return;
+                // Mostrar como flex para que herede estilos de .form-row y sea claramente visible.
+                if (offer === 'Oferta Fija' || offer === 'Internet hogar') {
+                    fixedRow.style.display = 'flex';
+                } else {
+                    fixedRow.style.display = 'none';
+                }
+            }
+            // Muestra u oculta el campo de mensaje personalizado
+            function toggleCustomMessageInput() {
+                const offer = document.getElementById('offerType').value;
+                const customMessageRow = document.getElementById('customMessageRow');
+                if (!customMessageRow) return;
+                if (offer === 'Mensaje Personalizado') {
+                    customMessageRow.style.display = 'flex';
+                } else {
+                    customMessageRow.style.display = 'none';
+                }
+            }
+            function showAgentInfo() {
+                const agent = document.getElementById('agent');
+                const infoDiv = document.getElementById('agentInfo');
+                if (!agent.value) {
+                    infoDiv.classList.remove('show');
+                    infoDiv.textContent = '';
+                    return;
+                }
+                const name = agent.value;
+                const user = agent.options[agent.selectedIndex].getAttribute('data-user');
+                const email = agent.options[agent.selectedIndex].getAttribute('data-email');
+                infoDiv.innerHTML = `<span style='color:#0ff;'>Agente seleccionado:</span><br>${name}<br>Usuario: <span style='color:#0ff;'>${user}</span><br>Correo: <span style='color:#0ff;'>${email}</span><br>Lugar: Agencia Kolbi Calle Tercera`;
+                infoDiv.classList.add('show');
+            }
+            document.addEventListener('DOMContentLoaded', () => {
+                updateFireWidget();
+                // Intentar inicializar clima y ubicación
+                try{ updateWeatherAndLocation(); } catch(e){}
+                // Inicializar contador aguinaldo
+                try{ updateAguinaldoCounter(); } catch(e){}
+            });
+            
+            function updateAguinaldoCounter(){
+    const now = new Date();
+    const year = now.getFullYear();
+    // Fecha objetivo 15 de diciembre del año actual
+    const target = new Date(year, 11, 15); // month 11 = diciembre
+    // Si ya pasó en este año, usar el próximo año
+    if (now > target) {
+        target.setFullYear(year + 1);
+    }
+    const diff = target - now;
+    const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+    const el = document.getElementById('daysToAguinaldo');
+    const emojiEl = document.getElementById('aguinaldoEmoji');
+    if (el) el.textContent = `${days} días`;
+    // Mostrar más festivo cuando falten 7 días o menos, y una carita emocionada cuando falten más de 30
+    if (emojiEl) {
+        if (days <= 7) emojiEl.textContent = '🎊';
+        else if (days > 30) emojiEl.textContent = '🥳';
+        else emojiEl.textContent = '🎉';
+    }
+    // actualizar cada día
+    setTimeout(updateAguinaldoCounter, 1000 * 60 * 60 * 24);
+}
+            async function updateWeatherAndLocation(){
+    const locText = document.getElementById('locText');
+    const locLink = document.getElementById('locLink');
+    const weatherTemp = document.getElementById('weatherTemp');
+    const weatherDesc = document.getElementById('weatherDesc');
+    const weatherIcon = document.getElementById('weatherIcon');
+    if (!('geolocation' in navigator)){
+        if (locText) locText.textContent = 'Ubicación no disponible';
+        return;
+    }
+    // pedir permiso y obtener coords
+    navigator.geolocation.getCurrentPosition(async (pos) => {
+        const lat = pos.coords.latitude.toFixed(4);
+        const lon = pos.coords.longitude.toFixed(4);
+        if (locText) locText.textContent = `Ubicación: ${lat}, ${lon}`;
+        if (locLink) locLink.href = `https://www.google.com/maps/search/?api=1&query=${lat},${lon}`;
+        // Llamada a Open-Meteo (sin clave)
+        try{
+            const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&temperature_unit=celsius`);
+            const data = await res.json();
+            if (data && data.current_weather){
+                const t = data.current_weather.temperature;
+                const wcode = data.current_weather.weathercode;
+                if (weatherTemp) weatherTemp.textContent = `${t}°C`;
+                if (weatherDesc) weatherDesc.textContent = `Clima: ${describeWeatherCode(wcode)}`;
+                if (weatherIcon) weatherIcon.textContent = pickWeatherIcon(wcode);
+            }
+        }catch(e){ if (weatherDesc) weatherDesc.textContent = 'Clima: N/D'; }
+    }, (err) => {
+        if (locText) locText.textContent = 'Permiso de ubicación denegado';
+        if (locLink) locLink.href = '#';
+    }, { enableHighAccuracy:false, maximumAge:600000, timeout:8000 });
+}
+
+function describeWeatherCode(code){
+    // simplified mapping (Open-Meteo codes)
+    if (code === 0) return 'Despejado';
+    if (code === 1 || code === 2 || code === 3) return 'Parcialmente nublado';
+    if (code >= 45 && code <= 48) return 'Niebla';
+    if (code >= 51 && code <= 67) return 'Lluvia ligera';
+    if (code >= 71 && code <= 77) return 'Nieve/Granizo';
+    if (code >= 80 && code <= 82) return 'Lluvia';
+    if (code >= 95) return 'Tormenta';
+    return 'Variable';
+}
+
+function pickWeatherIcon(code){
+    if (code === 0) return '☀️';
+    if (code === 1 || code === 2) return '🌤️';
+    if (code === 3) return '☁️';
+    if (code >= 45 && code <= 48) return '🌫️';
+    if (code >= 51 && code <= 67) return '🌦️';
+    if (code >= 71 && code <= 77) return '❄️';
+    if (code >= 80 && code <= 82) return '🌧️';
+    if (code >= 95) return '⛈️';
+    return '⛅';
+}
+            function sendMessage() {
+                const number = document.getElementById('phoneNumber').value.trim();
+                const agent = document.getElementById('agent');
+                const name = agent.value;
+                const user = agent.options[agent.selectedIndex].getAttribute('data-user');
+                const email = agent.options[agent.selectedIndex].getAttribute('data-email');
+                const offer = document.getElementById('offerType').value;
+                const carteraType = document.getElementById('carteraCodeType').value;
+                const carteraCode = document.getElementById('carteraCode').value.trim();
+                // customMessage se obtiene más abajo sólo cuando aplica (Mensaje Personalizado)
+                // Validación mejorada
+                if (!/^\d{8}$/.test(number)) {
+                    alert('Ingresá un número válido (8 dígitos, sin espacios).');
+                    return;
+                }
+                if (!name) {
+                    alert('Seleccioná tu nombre.');
+                    return;
+                }
+                if (carteraType === 'codigo') {
+                    if (!/^\d+$/.test(carteraCode) || carteraCode.length === 0) {
+                        alert('Ingresá solo números en el código de cartera.');
+                        return;
+                    }
+                }
+                // Si la oferta es Fija, validar número fijo e incluirlo en el mensaje.
+                // Para 'Internet hogar', si el agente ingresa un número fijo opcional, incluir la redacción solicitada.
+                let fixedMsg = '';
+                let fixedNumber = '';
+                if (offer === 'Oferta Fija') {
+                    fixedNumber = document.getElementById('fixedNumber').value.trim();
+                    if (!/^\d{8}$/.test(fixedNumber)) {
+                        alert('Ingresá un número fijo válido (8 dígitos, sin espacios).');
+                        return;
+                    }
+                    fixedMsg = `Con relación a su número de servicio fijo ${fixedNumber} te contactamos para que aproveches las ofertas.\n\n`;
+                } else if (offer === 'Internet hogar') {
+                    // Campo opcional: si se completó, validamos y añadimos la frase solicitada
+                    fixedNumber = document.getElementById('fixedNumber').value.trim();
+                    if (fixedNumber) {
+                        if (!/^\d{8}$/.test(fixedNumber)) {
+                            alert('Ingresá un número fijo válido (8 dígitos, sin espacios).');
+                            return;
+                        }
+                        fixedMsg = `Con relación a su servicio ${fixedNumber} queremos informarte que tenemos :\n\n`;
+                    }
+                }
+                // Verifica si el número ya existe en la lista
+                const fullNumber = '506' + number;
+                const numberList = document.getElementById('numberList');
+                let exists = false;
+                Array.from(numberList.children).forEach(li => {
+                    if (li.textContent.includes(fullNumber)) {
+                        exists = true;
+                    }
+                });
+                if (exists) {
+                    alert('Este número ya fue registrado en el historial.');
+                    return;
+                }
+                // Mensaje personalizado con saludo del agente
+                const saludo = `Hola, mi nombre es ${name}. Soy Agente Oficial de Kolbi.\n\n`;
+                let mensajeFinal = '';
+                let customMessage = '';
+                if (offer === 'Mensaje Personalizado') {
+                    customMessage = document.getElementById('customMessage').value.trim();
+                    if (!customMessage) {
+                        alert('Ingresá el mensaje personalizado antes de enviar.');
+                        return;
+                    }
+                    mensajeFinal = saludo + customMessage;
+                } else {
+                    mensajeFinal = saludo + fixedMsg + currentMessage;
+                }
+                const url = 'https://web.whatsapp.com/send?phone=' + fullNumber + '&text=' + encodeURIComponent(mensajeFinal);
+                window.open(url, '_blank');
+                // Guarda fecha y hora de envío
+                const now = new Date();
+                const fecha = now.toLocaleDateString();
+                const hora = now.toLocaleTimeString();
+                const info = {
+                    name, user, email, offer, fullNumber, carteraType, carteraCode, fecha, hora,
+                    fixedNumber,
+                    customMessage
+                };
+                const li = document.createElement('li');
+                li.dataset.info = JSON.stringify(info);
+                // Mostrar número fijo si aplica, o indicar que fue mensaje personalizado
+                li.textContent = `${name} | ${user} | ${email} | ${offer} | ${fullNumber}` +
+                    (offer === 'Mensaje Personalizado' ? ` | Mensaje personalizado enviado` : (offer === 'Oferta Fija' ? ` | Número fijo: ${fixedNumber}` : (carteraType === 'asignacion' ? ' | Por Asignación de Jefatura' : ` | Código: ${carteraCode}`))) +
+                    ` | Enviado: ${fecha} ${hora}`;
+                document.getElementById('numberList').appendChild(li);
+                saveHistory();
+                showToast('Envío registrado exitosamente');
+            }
+            function printContactList() {
+                // Copia la lista al área de impresión
+                const numberList = document.getElementById('numberList');
+                const printList = document.getElementById('printList');
+                printList.innerHTML = '';
+                Array.from(numberList.children).forEach(li => {
+                    const clone = li.cloneNode(true);
+                    printList.appendChild(clone);
+                });
+                // Agrega el código de cartera al reporte
+                const carteraType = document.getElementById('carteraCodeType').value;
+                const carteraCode = document.getElementById('carteraCode').value.trim();
+                let carteraText = '';
+                if (carteraType === 'asignacion') {
+                    carteraText = 'Por Asignación de Jefatura sin código';
+                } else if (carteraCode) {
+                    carteraText = `Código de Cartera de Clientes: ${carteraCode}`;
+                }
+                document.getElementById('carteraPrint').textContent = carteraText;
+                // Agrega fecha y hora de impresión
+                const now = new Date();
+                const fecha = now.toLocaleDateString();
+                const hora = now.toLocaleTimeString();
+                document.getElementById('printDate').textContent = `Entregado el día ${fecha} a las ${hora}`;
+                document.getElementById('printReport').style.display = 'block';
+                window.print();
+                document.getElementById('printReport').style.display = 'none';
+            }
+            function updateClock() {
+                const now = new Date();
+                const horas = String(now.getHours()).padStart(2, '0');
+                const minutos = String(now.getMinutes()).padStart(2, '0');
+                const segundos = String(now.getSeconds()).padStart(2, '0');
+                const dia = String(now.getDate()).padStart(2, '0');
+                const mes = String(now.getMonth() + 1).padStart(2, '0');
+                const anio = now.getFullYear();
+                document.getElementById('neonClock').textContent = `${horas}:${minutos}:${segundos} | ${dia}/${mes}/${anio}`;
+            }
+            setInterval(updateClock, 1000);
+            updateClock();
+
+            // Nuevas funciones para el widget de fuego y reloj mini
+            function updateFireWidget() {
+                const numberList = document.getElementById('numberList');
+                const items = Array.from(numberList.children).map(li => JSON.parse(li.dataset.info));
+                const totalSends = items.length;
+                const successfulSends = items.filter(item => item.offer !== 'Mensaje Personalizado').length;
+                const fireStatus = document.getElementById('fireStatus');
+                const fireWidget = document.getElementById('fireWidget');
+                
+                document.getElementById('totalSends').textContent = totalSends;
+
+                if (totalSends === 0) {
+                    fireStatus.textContent = 'Calm';
+                    fireWidget.className = 'fire-widget level-safe';
+                } else if (successfulSends === totalSends) {
+                    fireStatus.textContent = '🔥 Activo';
+                    fireWidget.className = 'fire-widget level-high';
+                } else {
+                    fireStatus.textContent = '⚠️ Parcial';
+                    fireWidget.className = 'fire-widget level-medium';
+                }
+            }
+
+            /* Nuevas funciones para el widget de clima */
+            async function updateWeatherAndLocation() {
+                // Obtener ubicación
+                function success(position) {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    // Usar las coordenadas para obtener el clima
+                    getWeather(lat, lon);
+                    // Obtener enlace a Google Maps
+                    const locLink = document.getElementById('locLink');
+                    locLink.href = `https://www.google.com/maps/@${lat},${lon},15z`;
+                    locLink.textContent = `Ver mapa`;
+                }
+                function error() {
+                    console.error('Error obteniendo la ubicación.');
+                    // Usar ubicación por defecto (San José, CR) si falla la geolocalización
+                    const defaultLat = 9.9281;
+                    const defaultLon = -84.0907;
+                    getWeather(defaultLat, defaultLon);
+                }
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(success, error, { timeout: 10000 });
+                } else {
+                    console.error('Geolocalización no es soportada por este navegador.');
+                }
+            }
+
+            async function getWeather(lat, lon) {
+                // Usar el endpoint público de Open-Meteo con current_weather (no requiere API key)
+                const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&temperature_unit=celsius`;
+                try {
+                    const response = await fetch(apiUrl);
+                    if (!response.ok) throw new Error('Error en la respuesta de la API');
+                    const data = await response.json();
+                    if (data && data.current_weather) {
+                        const temp = data.current_weather.temperature;
+                        const code = data.current_weather.weathercode;
+                        const weatherIcon = document.getElementById('weatherIcon');
+                        if (weatherIcon) weatherIcon.textContent = pickWeatherIcon(code);
+                        const weatherTempEl = document.getElementById('weatherTemp');
+                        const weatherDescEl = document.getElementById('weatherDesc');
+                        if (weatherTempEl) weatherTempEl.textContent = `${temp}°C`;
+                        if (weatherDescEl) weatherDescEl.textContent = `Clima: ${describeWeatherCode(code)}`;
+                    } else {
+                        console.error('Respuesta de clima inesperada', data);
+                    }
+                } catch (error) {
+                    console.error('Error obteniendo el clima:', error);
+                }
+            }
+
+            // Llamar a la función de actualización de clima y ubicación al cargar
+            updateWeatherAndLocation();
+        </script>
+    </body>
+
+    </html>
